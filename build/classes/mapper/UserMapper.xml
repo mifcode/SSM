@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.neuedu.sm.dao.UsersDao">
+<!-- public Users queryUserById(Integer id); -->
+
+<!-- void deleteUser(Integer id); -->
+
+<delete id="deleteUser" parameterType="int">
+delete from t_user where id=#{id}
+</delete>
+
+<!-- void updateUser(Users user); -->
+<update id="updateUser" parameterType="users">
+update t_user set username=#{username} where id=#{id}
+</update>
+
+<!-- public void addUser(Users user); -->
+	<insert id="addUser" parameterType="users">
+	insert into t_user (id,username) values(#{id},#{username})
+	</insert>
+	
+	<select id="queryUserById" parameterType="int" resultType="users">
+		select * from t_user where id=#{id}
+	</select>
+	
+	<select id="queryAll" resultType="users">
+		select * from t_user 
+	</select>
+
+</mapper>
