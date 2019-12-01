@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 这里的配置最重要就是spring把mybatis-config.xml文件干掉 -->
+	<!-- 加载属性配置文件 -->
+	<!-- <context:property-placeholder location="classpath:jdbc.properties"/> -->
+	<context:property-placeholder
+		location="classpath:jdbc.properties" />
+	<!-- 配置数据源bean，有apache数据源 有c3p0数据源，有druid 阿里德鲁伊数据源 -->
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> 
+		<property name="url" value="${url}"></property> <property name="username" 
+		value="${username}"></property> <property name="password" value="${password}"></property> 
+		<property name="driverClassName" value="${driver}"></property> </bean> -->
+
+	<!-- 配置sessionFactory -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation"
+			value="classpath:mybatis-config.xml"></property>
+		<property name="mapperLocations"
+			value="classpath:mapper/*.xml" />
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 开启注解扫描 -->
+    <tx:annotation-driven />
+<!-- 配置mapper接口扫描器，自动扫描basePackage指定的包，为包下的所有接口生成实例 
+
+-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="net.neuedu.sm.dao" />
+	</bean>
+	<context:component-scan
+		base-package="net.neuedu.sm"></context:component-scan>
+</beans>
