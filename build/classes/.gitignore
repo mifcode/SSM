@@ -1,9 +1,0 @@
-/.gitignore
-/beans.xml
-/jdbc.properties
-/log4j.properties
-/mapper/
-/mybatis-config.xml
-/net/
-/springMVC-servlet.xml
-/test/
