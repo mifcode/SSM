@@ -10,10 +10,8 @@ public class Test {
 
 	public static void main(String[] args) {
 		ApplicationContext act = new ClassPathXmlApplicationContext("beans.xml");
-		
 		UsersDao usersDao=(UsersDao) act.getBean("usersDao");
-		Users user=usersDao.queryUserById(4);
-		
+		Users user=usersDao.queryUserById(1);
 		System.out.println(user.getUsername());
 	}}
 

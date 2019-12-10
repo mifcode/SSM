@@ -89,7 +89,7 @@ public class UserController {
 //		mav.addObject("list", usersDao.queryAll());
 //		mav.setViewName("list");
 		//那么怎么实现分页的效果呢？
-		Page page=PageHelper.startPage(2, 3);
+		Page page=PageHelper.startPage(1, 3);
 		List<Users> list=usersDao.queryAll();//select * from t_user     select * from t_user limit 0,2;
 		System.out.println("size:"+list.size());
 		for(Users u:list)
